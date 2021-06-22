@@ -14,9 +14,9 @@ class UserController extends Controller
         $count=$user->count();
 
         if ($count>0) {
-            return view('survey-panel-member.account-login');
+            return view('app.login');
         }else {
-            return view('auth.register');
+            return view('auth.admin_register');
         }
     }
     public function saveFirstRegister(Request $request){

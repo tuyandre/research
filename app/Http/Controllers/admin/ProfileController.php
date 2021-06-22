@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function changePassword()
     {
         if (Auth::check()){
@@ -60,7 +64,7 @@ class ProfileController extends Controller
     public function viewProfile()
     {
         if (Auth::check()){
-            return view('admin.profiles.viewProfile');
+            return view('backend.users.profile');
         }else{
             return view('survey-panel-member.account-login');
         }
@@ -79,13 +83,8 @@ class ProfileController extends Controller
            if ($user) {
                $user->first_name = $request['first_name'];
                $user->last_name = $request['last_name'];
-               $user->email = $request['email'];
                $user->telephone = $request['telephone'];
                $user->address = $request['address'];
-               $user->country = $request['country'];
-               $user->state = $request['state'];
-               $user->date = $request['date'];
-               $user->city = $request['city'];
                $user->username = $request['username'];
                $user->save();
                return response()->json(['info' => 'ok'], 200);

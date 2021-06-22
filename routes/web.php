@@ -257,32 +257,32 @@ Route::prefix('/Administration/')->group(
 
             //        user and admin account edition
         Route::get('profiles/change/password', [
-            'uses' => 'Admin\ProfileController@changePassword',
+            'uses' => 'admin\ProfileController@changePassword',
             'as' => 'profiles.getPassword'
         ]);
         Route::post('profiles/update/password', [
-            'uses' => 'Admin\ProfileController@updatePassword',
+            'uses' => 'admin\ProfileController@updatePassword',
             'as' => 'profiles.updatePassword'
         ]);
 
         Route::get('profiles/view/profile', [
-            'uses' => 'Admin\ProfileController@viewProfile',
+            'uses' => 'admin\ProfileController@viewProfile',
             'as' => 'profiles.viewProfile'
         ]);
         Route::get('profiles/getInfo', [
-            'uses' => 'Admin\ProfileController@getInfo',
+            'uses' => 'admin\ProfileController@getInfo',
             'as' => 'profiles.getInfo'
         ]);
         Route::post('profiles/update/info', [
-            'uses' => 'Admin\ProfileController@updateInfo',
+            'uses' => 'admin\ProfileController@updateInfo',
             'as' => 'profiles.updateInfo'
         ]);
         Route::get('profiles/get/profile', [
-            'uses' => 'Admin\ProfileController@getProfile',
+            'uses' => 'admin\ProfileController@getProfile',
             'as' => 'profiles.getProfile'
         ]);
         Route::post('profiles/update/profile', [
-            'uses' => 'Admin\ProfileController@updateProfile',
+            'uses' => 'admin\ProfileController@updateProfile',
             'as' => 'profiles.updateProfile'
         ]);
 

@@ -12,15 +12,17 @@ class MemberController extends Controller
     public function index()
     {
         if (Auth::check()){
-            return view('admin.users.userLists');
+            return view('backend.users.userList');
         }else{
-            return view('survey-panel-member.account-login');
+            return view('app.login');
         }
     }
     public function getMembers(){
-        $cat=User::whereHas(
+        $cat=User::with(['Role'])
+        ->whereHas(
             'roles', function($q){
             $q->where('name', 'member');
+            $q->orWhere('name', 'admin');
         }
         )->get();
         return response()->json(['members' => $cat], 200);
