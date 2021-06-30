@@ -135,6 +135,83 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('/Administration/')->group(
     function () {
 
+
+
+        Route::post('UserList/saveMember', [
+            'uses' => 'admin\MemberController@saveMember',
+            'as' => 'users.saveMember'
+        ]);
+
+
+
+
+        //admin devices routes
+        Route::get('devices/all', [
+            'uses' => 'admin\DeviceController@index',
+            'as' => 'admin.devices.all'
+        ]);
+        Route::get('devices/getDevices', [
+            'uses' => 'admin\DeviceController@getDevices',
+            'as' => 'admin.devices.getDevices'
+        ]);
+        Route::post('devices/saveDevices', [
+            'uses' => 'admin\DeviceController@saveDevices',
+            'as' => 'admin.devices.saveDevices'
+        ]);
+        Route::put('devices/updateDevices', [
+            'uses' => 'admin\DeviceController@updateDevices',
+            'as' => 'admin.devices.updateDevices'
+        ]);
+        Route::get('/devices/admin/show/{id}', [
+            'uses' => 'admin\DeviceController@showDevice',
+            'as' => 'admin.devices.showDevice'
+        ])->middleware('auth');
+
+        Route::delete('/devices/admin/delete/{id}', [
+            'uses' => 'admin\DeviceController@destroyDevice',
+            'as' => 'admin.devices.destroyDevice'
+        ])->middleware('auth');
+
+        Route::get('devices/available_device', [
+            'uses' => 'admin\DeviceController@availableDevice',
+            'as' => 'admin.devices.available_device'
+        ]);
+        Route::get('devices/getAvailableDevices', [
+            'uses' => 'admin\DeviceController@getAvailableDevices',
+            'as' => 'admin.devices.getAvailableDevices'
+        ]);
+        Route::get('devices/unavailable_device', [
+            'uses' => 'admin\DeviceController@unavailableDevice',
+            'as' => 'admin.devices.unavailable_device'
+        ]);
+        Route::get('devices/getUnavailableDevices', [
+            'uses' => 'admin\DeviceController@getUnavailableDevices',
+            'as' => 'admin.devices.getUnavailableDevices'
+        ]);
+        Route::get('devices/historical', [
+            'uses' => 'admin\DeviceController@historical',
+            'as' => 'admin.devices.historical'
+        ]);
+        Route::get('devices/getHistorical', [
+            'uses' => 'admin\DeviceController@getHistorical',
+            'as' => 'admin.devices.getHistorical'
+        ]);
+
+        Route::post('devices/assignDevices', [
+            'uses' => 'admin\DeviceController@assignDevices',
+            'as' => 'admin.devices.assignDevices'
+        ]);
+        Route::post('devices/releaseDevices/{id}', [
+            'uses' => 'admin\DeviceController@releaseDevice',
+            'as' => 'admin.devices.releaseDevice'
+        ]);
+        Route::get('/devices/detail/{id}', [
+            'uses' => 'admin\DeviceController@deviceDetail',
+            'as' => 'admin.devices.deviceDetail'
+        ])->middleware('auth');
+
+
+
         //admin project category routes
         Route::get('project/categories', [
             'uses' => 'projects\CategoryController@index',

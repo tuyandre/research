@@ -271,7 +271,8 @@
 
 <!-- Switcher js -->
 <script src="{{asset('dashboard/assets/switcher/js/switcher.js')}}"></script>
-
+<script src="{{ asset('/parsleyjs/js/parsley.min.js') }}" ></script>
+<script src="{{ asset('/js/bootbox.min.js') }}" ></script>
 @yield('js')
 </body>
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class MemberController extends Controller
 {
@@ -51,6 +53,40 @@ class MemberController extends Controller
         else{
             return response()->json(['message' => "not"], 200);
         }
+    }
+    public function saveMember(Request $request){
+
+
+        $role = Role::firstOrCreate(
+            ['name' =>  request('role')],
+            ['display_name' =>  request('role')],
+            ['description' => request('role')]
+        );
+
+
+//            $toten = Str::random(4);
+            $user = new User();
+            $user->first_name = $request['first_name'];
+            $user->last_name = $request['last_name'];
+            $user->role_id = $role->id;
+            $user->confirmed=true;
+            $user->activated=true;
+            $user->email = $request['email'];
+            $user->telephone = $request['phone'];
+            $user->username = $request['email'];
+            $user->password = bcrypt($request['password']);
+            $user->save();
+
+            $user->attachRole($role);
+
+//        return view('survey-panel-member.account-login');
+            return response()->json(['user' => $user, 'message' => 'ok'], 200);
+
+
+
+
+
+
     }
 
 }

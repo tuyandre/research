@@ -19,6 +19,25 @@
                 <a class="nav-link" href="{{ route('members.index') }}"><span class="shape1"></span>
                     <span class="shape2"></span><i class="ti-user sidemenu-icon"></i><span class="sidemenu-label">Users</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span>
+                    <i class="ti-mobile sidemenu-icon"></i>
+                    <span class="sidemenu-label">Devices</span><i class="angle fe fe-chevron-right"></i></a>
+                <ul class="nav-sub">
+                    <li class="nav-sub-item">
+                        <a class="nav-sub-link" href="{{route('admin.devices.all')}}">All Devices</a>
+                    </li>
+                    <li class="nav-sub-item">
+                        <a class="nav-sub-link" href="{{route('admin.devices.available_device')}}">Available Devices</a>
+                    </li>
+                    <li class="nav-sub-item">
+                        <a class="nav-sub-link" href="{{route('admin.devices.unavailable_device')}}">Assigned Devices</a>
+                    </li>
+                    <li class="nav-sub-item">
+                        <a class="nav-sub-link" href="{{route('admin.devices.historical')}}">Historical</a>
+                    </li>
+                </ul>
+            </li>
 
         </ul>
     </div>

@@ -57,7 +57,9 @@
                         <h6 class="modal-title">Add users</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <form action="https://laravel.spruko.com/spruha/ltr/form-validation" data-parsley-validate="">
+                        <div id="add-messages"></div>
+                        <form action="{{route('users.saveMember')}}" method="post" data-parsley-validate="" id="frmSave">
+                            {{ csrf_field() }}
                             <div class="">
                                 <div class="row row-sm form-group">
                                     <div class="col-lg-12">
@@ -79,7 +81,7 @@
 {{--                                                @endforeach--}}
                                                 <option value="admin">Administrator</option>
                                                 <option value="member">Member</option>
-                                                <option value="admin">Administrator</option>
+                                                <option value="senior">Senior Employer</option>
                                             </select>
 {{--                                            <input class="form-control" id="textMask" name="first_name" placeholder="First name" type="text" required>--}}
                                         </div>
@@ -155,8 +157,8 @@
 
                             </div>
                     <div class="modal-footer">
-                        <button class="btn ripple btn-primary">Save changes</button>
-                        <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Close</button>
+                        <button class="btn ripple btn-primary" id="btnSave">Save changes</button>
+                        <button class="btn ripple btn-secondary" data-dismiss="modal"  type="button">Close</button>
                     </div>
                     </form>
                 </div>
@@ -228,6 +230,70 @@
                 });
     //initialize data table
                 myFunc();
+
+
+                $('#frmSave').submit(function (e) {
+                    e.preventDefault();
+                    var form = $(this);
+                    var btn = $('#btnSave');
+                    btn.button('loading');
+                    $.ajax({
+                        url: form.attr('action'),
+                        method: form.attr('method'),
+                        data: form.serialize()
+                    }).done(function (data) {
+                        console.log(data);
+
+                        if (data.message == "ok") {
+                            btn.button('reset');
+                            form[0].reset();
+                            // reload the table
+                            table.destroy();
+                            myFunc();
+                            $('#add-messages').html('<div class="alert alert-success flat">' +
+                                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> User  successfully Registered. </div>');
+
+                            $(".alert-success").delay(500).show(10, function () {
+                                $(this).delay(3000).hide(10, function () {
+                                    $(this).remove();
+                                });
+                            });
+                            location.reload();
+                        }
+                    }).fail(function (response) {
+                        console.log(response.responseJSON);
+
+                        btn.button('reset');
+//                    showing errors validation on pages
+
+                        var option = "";
+                        option += response.responseJSON.message;
+                        var data = response.responseJSON.errors;
+                        $.each(data, function (i, value) {
+                            console.log(value);
+                            if (i == 'name') {
+                                $('#tname').html(value[0])
+                            }
+                            $.each(value, function (j, values) {
+                                option += '<p>' + values + '</p>';
+                            });
+                        });
+                        $('#add-messages').html('<div class="alert alert-danger flat">' +
+                            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            '<strong><i class="glyphicon glyphicon-remove"></i></strong><b>oops:</b>' + option + '</div>');
+
+                        $(".alert-success").delay(500).show(10, function () {
+                            $(this).delay(3000).hide(10, function () {
+                                $(this).remove();
+                            });
+                        });
+
+                        //alert("Internal server error");
+                    });
+                    return false;
+                });
+
                 manageTable.on('click', '.js-confirm', function () {
                     var button = $(this);
                     bootbox.confirm("Are you sure you want to Confirm this member?", function (result) {
